@@ -18,10 +18,16 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from rest_framework import routers
+from jobs.views import JobsViewSet
+
+router = routers.DefaultRouter()
+router.register(r"jobs", JobsViewSet)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("api/", include(router.urls)),
 ]
 
 if settings.DEBUG:
