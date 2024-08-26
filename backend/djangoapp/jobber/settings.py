@@ -33,6 +33,11 @@ ALLOWED_HOSTS = [
     h.strip() for h in os.getenv("ALLOWED_HOSTS", "").split(",") if h.strip()
 ]
 
+CORS_ALLOWED_ORIGINS = [
+    h.strip()
+    for h in os.getenv("CORS_ALLOWED_ORIGINS", "").split(",")  # noqa
+    if h.strip()
+]
 
 # Application definition
 
@@ -45,6 +50,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "jobs",
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
@@ -55,6 +61,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
 ]
 
 ROOT_URLCONF = "jobber.urls"
