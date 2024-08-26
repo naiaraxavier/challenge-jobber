@@ -3,7 +3,7 @@ from .models import Jobs
 from .serializers import JobsSerializer
 
 
-class JobsWiewSet(viewsets.ModelViewSet):
+class JobsViewSet(viewsets.ModelViewSet):
     # Dados que será usado pelo viewset
     queryset = Jobs.objects.all()
     # Serializador que será usada para converter dados entre JSON e modelo
