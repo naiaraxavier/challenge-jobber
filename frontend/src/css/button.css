@@ -1,0 +1,36 @@
+/* Base styles for the button */
+.button {
+  align-items: center;
+  background-color: var(--color-secondary);
+  border-radius: 0.5rem;
+  color: var(--color-primary);
+  cursor: pointer;
+  display: flex;
+  font-weight: 600;
+  gap: 0.5rem;
+  height: 48px;
+  justify-content: center;
+  text-transform: uppercase;
+  transition: background-color 0.2s linear;
+}
+
+.button:hover {
+  background-color: var(--color-hover-btn);
+}
+
+/* Size variants */
+.button-size-1 {
+  width: 250px;
+}
+
+.button-size-2 {
+  width: 240px;
+}
+
+.button-size-2 {
+  width: 178px;
+}
+
+.button-size-4 {
+  width: 100%;
+}

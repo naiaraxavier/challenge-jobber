@@ -1,5 +1,5 @@
 .header {
-  background-color: var(--color-background-secundary);
+  background-color: var(--color-background-secondary);
   box-shadow: 0 4px 8px rgba(255, 255, 255, 0.05);
   padding: 18px 16px;
 }
@@ -16,7 +16,7 @@
 }
 
 .header__logo h1 {
-  font-family: var(--font-secundary);
+  font-family: var(--font-secondary);
   font-size: 1.25rem;
 }
 
