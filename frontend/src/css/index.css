@@ -1,13 +1,19 @@
 /* general settings */
 :root {
-  --color-primary: #f5f5f5;
-  --color-secondary: #1fc468;
-  --color-tertiary: #6a21f4;
+  --color-logo: #d301fa;
 
-  --color-hover-btn: #069948;
+  --color-text-primary: #f5f5f5;
+  --color-text-secondary: #012939;
+  --color-text-tertiary: #a1a1aa;
+
+  --color-btn-primary: #76d100;
+  --color-hover-btn-primary: #8ef606;
+  --color-btn-secondary: #f02f4c;
 
   --color-background-primary: #171413;
   --color-background-secondary: #1c1918;
+  --color-background-tertiary: #e5e5e5;
+
   --color-box-shadow: #ffffff0d;
 
   --font-primary: "Montserrat", sans-serif;
@@ -31,13 +37,13 @@ html {
 
 body {
   background-color: var(--color-background-primary);
-  color: var(--color-primary);
+  color: var(--color-text-primary);
   font-family: var(--font-primary);
 }
 
 /* applies styles to parts of the document
 that were selected by the user */
 *::selection {
-  color: var(--color-tertiary);
-  background: var(--color-primary);
+  color: var(--color-logo);
+  background: var(--color-text-primary);
 }
