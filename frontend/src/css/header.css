@@ -1,6 +1,6 @@
 .header {
   background-color: var(--color-background-secondary);
-  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 8px var(--color-box-shadow);
   padding: 18px 16px;
 }
 

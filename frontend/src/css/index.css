@@ -4,10 +4,11 @@
   --color-secondary: #1fc468;
   --color-tertiary: #6a21f4;
 
+  --color-hover-btn: #069948;
+
   --color-background-primary: #171413;
   --color-background-secondary: #1c1918;
-
-  --color-hover-btn: #069948;
+  --color-box-shadow: #ffffff0d;
 
   --font-primary: "Montserrat", sans-serif;
   --font-secondary: "Poppins", sans-serif;
