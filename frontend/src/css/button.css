@@ -14,10 +14,6 @@
   transition: background-color 0.2s ease-in-out;
 }
 
-.button:hover {
-  background-color: var(--color-hover-btn-primary);
-}
-
 /* Size variants */
 .button-size-1 {
   width: 200px;
@@ -33,4 +29,13 @@
 
 .button-size-4 {
   width: 100%;
+}
+
+/* DESKTOP */
+@media (min-width: 1024px) {
+  .button:hover {
+    background-color: var(--color-hover-btn-primary);
+    scale: 1.01;
+    transition: scale 0.08s ease-in-out;
+  }
 }

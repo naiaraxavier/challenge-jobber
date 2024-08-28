@@ -27,8 +27,8 @@
   }
 
   .header__logo {
-    max-width: 1260px;
     margin: 0 auto;
+    max-width: 1260px;
   }
 
   .header__logo img {
