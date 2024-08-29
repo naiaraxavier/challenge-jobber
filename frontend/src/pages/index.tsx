@@ -3,11 +3,19 @@ import { useFormModalContext } from "../hooks/useFormModalContext";
 import { CardJob } from "../components/card-job";
 import { Button } from "../components/button";
 import { Header } from "../components/header";
+import { useApi } from "../hooks/useApi";
 import { Plus } from "lucide-react";
+import { useEffect } from "react";
 import "../css/home-page.css";
 
-export const HomePage: React.FC = () => {
+export const HomePage = () => {
   const { handleRegistrationModal, isFormOpen } = useFormModalContext();
+  const { data: jobs, error, isLoading, get } = useApi();
+
+  useEffect(() => {
+    get("/api/jobs/");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -29,7 +37,13 @@ export const HomePage: React.FC = () => {
           </ul>
         </div>
 
-        <CardJob />
+        {isLoading ? (
+          <p>Carregando...</p>
+        ) : error ? (
+          <p>{error}</p>
+        ) : (
+          jobs?.map((job) => <CardJob key={job.id} job={job} />)
+        )}
 
         {isFormOpen && <CreateUpdateModal />}
       </main>

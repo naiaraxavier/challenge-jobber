@@ -1,7 +1,7 @@
 import logo from "../assets/img/logo.svg";
 import "../css/header.css";
 
-export function Header() {
+export const Header = () => {
   return (
     <header className="header">
       <div className="header__logo">
@@ -10,4 +10,4 @@ export function Header() {
       </div>
     </header>
   );
-}
+};

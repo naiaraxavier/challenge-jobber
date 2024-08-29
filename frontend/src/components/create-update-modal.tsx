@@ -1,10 +1,10 @@
 import { useFormModalContext } from "../hooks/useFormModalContext";
-import React, { useState } from "react";
 import { Tag, X, ImageUp, Text } from "lucide-react";
 import { Button } from "../components/button";
+import React, { useState } from "react";
 import "../css/create-update-modal.css";
 
-export const CreateUpdateModal: React.FC = () => {
+export const CreateUpdateModal = () => {
   const [fileName, setFileName] = useState<string>("");
   const { handleCloseModal, isEditing } = useFormModalContext();
 

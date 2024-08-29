@@ -6,7 +6,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   size?: "1" | "2";
 }
 
-export function Button({ children, size = "1", ...props }: ButtonProps) {
+export const Button = ({ children, size = "1", ...props }: ButtonProps) => {
   const sizeClass = `button-size-${size}`;
 
   return (
@@ -14,4 +14,4 @@ export function Button({ children, size = "1", ...props }: ButtonProps) {
       {children}
     </button>
   );
-}
+};
