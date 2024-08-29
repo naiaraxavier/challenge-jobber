@@ -1,6 +1,7 @@
 import { useFormModalContext } from "../hooks/useFormModalContext";
 import { Ellipsis, Pencil, Trash2 } from "lucide-react";
 import { CardJobProps } from "../interfaces/interfaces";
+import logo from "../assets/img/logo.svg";
 import { useState } from "react";
 import "../css/card-job.css";
 
@@ -32,7 +33,7 @@ export const CardJob = ({ job }: CardJobProps) => {
         onClick={() => setShowActions(!showActions)}
       />
       <div className="card__content--img">
-        <img src={image} alt="Imagem" />
+        <img src={image || logo} alt="Imagem" />
       </div>
       <div className="card__content--info">
         <p className="card__content--title">{title}</p>

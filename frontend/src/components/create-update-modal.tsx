@@ -1,12 +1,14 @@
 import { useFormModalContext } from "../hooks/useFormModalContext";
 import { Tag, X, ImageUp, Text } from "lucide-react";
+import React, { useState, FormEvent } from "react";
 import { Button } from "../components/button";
-import React, { useState } from "react";
 import "../css/create-update-modal.css";
+import { useApi } from "../hooks/useApi";
 
 export const CreateUpdateModal = () => {
   const [fileName, setFileName] = useState<string>("");
   const { handleCloseModal, isEditing } = useFormModalContext();
+  const { post, error } = useApi();
 
   // Lida com a informação do arquivo de imagem
   const handleFileToggle = ({
@@ -18,6 +20,14 @@ export const CreateUpdateModal = () => {
     }
   };
 
+  // Cria/edita
+  const createUpdateJob = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    post(data, "/api/jobs/");
+    // window.document.location.reload();
+  };
+
   return (
     <div className="overlay">
       <div className="modal">
@@ -25,11 +35,12 @@ export const CreateUpdateModal = () => {
           <h2>{isEditing ? "Editar" : "Cadastrar"} trabalho</h2>
           <X className="close-button" onClick={handleCloseModal} />
         </div>
-        <form>
+        <form onSubmit={createUpdateJob}>
           <div className="input-group">
             <Tag className="tag" />
             <input name="title" placeholder="Título" className="input--title" />
           </div>
+
           <div className="input-group">
             <Text className="tag" />
             <input
@@ -44,6 +55,7 @@ export const CreateUpdateModal = () => {
               Escolha uma imagem
             </label>
             <input
+              name="image"
               type="file"
               id="imageUpload"
               accept="image/*"
@@ -56,6 +68,7 @@ export const CreateUpdateModal = () => {
             )}
           </div>
           <Button size="2">{isEditing ? "Editar" : "Salvar"}</Button>
+          {error && <div className="error-message">{error}</div>}
         </form>
       </div>
     </div>

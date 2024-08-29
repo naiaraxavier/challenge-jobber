@@ -21,6 +21,13 @@
   display: none;
 }
 
+.main_content__cards {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 2.5rem;
+}
+
 /* TABLET */
 @media (min-width: 640px) {
   .main-content__container {

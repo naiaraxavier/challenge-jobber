@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Job, Payload } from "../interfaces/interfaces";
 import { api } from "../lib/axios";
+import { AxiosResponse, AxiosError } from "axios";
 
 export const useApi = () => {
   const [data, setData] = useState<Job[] | null>(null);
@@ -15,9 +16,9 @@ export const useApi = () => {
       setData(response.data);
     } catch (err) {
       if (err instanceof Error) {
-        setError("Ocorreu um erro");
+        setError(`Ocorreu um erro: ${err.message}`);
       } else {
-        setError("An unknown error occurred");
+        setError("Erro desconhecido");
       }
     } finally {
       setIsLoading(false);
@@ -25,16 +26,24 @@ export const useApi = () => {
   };
 
   // Função para fazer a requisição POST
-  const post = async (payload: Payload, endpoint: string) => {
+  const post = async (payload: FormData, endpoint: string) => {
     setIsLoading(true);
     try {
-      const response = await api.post(endpoint, payload);
+      const response: AxiosResponse = await api.post(endpoint, payload, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       setData(response.data);
     } catch (err) {
-      if (err instanceof Error) {
-        setError(err.message);
+      if (err instanceof AxiosError) {
+        if (err.status === 400) {
+          setError("Título e Descrição são campos obrigatórios");
+        } else {
+          setError(`Ocorreu um erro: ${err.message}`);
+        }
       } else {
-        setError("An unknown error occurred");
+        setError("Erro desconhecido");
       }
     } finally {
       setIsLoading(false);

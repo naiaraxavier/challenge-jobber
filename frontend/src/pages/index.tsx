@@ -37,13 +37,15 @@ export const HomePage = () => {
           </ul>
         </div>
 
-        {isLoading ? (
-          <p>Carregando...</p>
-        ) : error ? (
-          <p>{error}</p>
-        ) : (
-          jobs?.map((job) => <CardJob key={job.id} job={job} />)
-        )}
+        <div className="main_content__cards">
+          {isLoading ? (
+            <p>Carregando...</p>
+          ) : error ? (
+            <p>{error}</p>
+          ) : (
+            jobs?.map((job) => <CardJob key={job.id} job={job} />)
+          )}
+        </div>
 
         {isFormOpen && <CreateUpdateModal />}
       </main>

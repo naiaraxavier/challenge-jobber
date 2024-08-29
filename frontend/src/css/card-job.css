@@ -176,6 +176,7 @@
     max-width: 1260px;
     padding: 1rem 1.5rem;
     transition: transform 0.3s ease;
+    width: 100%;
   }
 
   .card__content:hover {
