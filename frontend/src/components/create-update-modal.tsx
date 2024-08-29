@@ -1,29 +1,20 @@
-import { FormModalContext } from "../context/form-modal-context";
-import React, { useState, useContext } from "react";
+import { useFormModalContext } from "../hooks/useFormModalContext";
+import React, { useState } from "react";
 import { Tag, X, ImageUp, Text } from "lucide-react";
 import { Button } from "../components/button";
 import "../css/create-update-modal.css";
 
 export const CreateUpdateModal: React.FC = () => {
   const [fileName, setFileName] = useState<string>("");
-
-  const context = useContext(FormModalContext);
-  if (!context) {
-    throw new Error();
-  }
-  const { handleCloseModal, isEditing } = context;
+  const { handleCloseModal, isEditing } = useFormModalContext();
 
   // Lida com a informação do arquivo de imagem
   const handleFileToggle = ({
     target,
-  }:
-    | React.ChangeEvent<HTMLInputElement>
-    | React.MouseEvent<SVGElement>): void => {
+  }: React.ChangeEvent<HTMLInputElement>): void => {
     if ("files" in target) {
       const file = target.files?.[0];
       setFileName(file ? file.name : "");
-    } else {
-      window.document.location.reload();
     }
   };
 
@@ -61,11 +52,6 @@ export const CreateUpdateModal: React.FC = () => {
             {fileName && (
               <div className="file-info">
                 <p className="file-name">{`Arquivo escolhido: ${fileName}`}</p>
-                <X
-                  className="remove-button"
-                  onClick={handleFileToggle}
-                  size={15}
-                />
               </div>
             )}
           </div>

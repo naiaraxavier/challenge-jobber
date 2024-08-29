@@ -1,18 +1,13 @@
 import { CreateUpdateModal } from "../components/create-update-modal";
-import { FormModalContext } from "../context/form-modal-context";
+import { useFormModalContext } from "../hooks/useFormModalContext";
 import { CardJob } from "../components/card-job";
 import { Button } from "../components/button";
 import { Header } from "../components/header";
 import { Plus } from "lucide-react";
-import { useContext } from "react";
 import "../css/home-page.css";
 
 export const HomePage: React.FC = () => {
-  const context = useContext(FormModalContext);
-  if (!context) {
-    throw new Error();
-  }
-  const { handleRegistrationModal, isFormOpen } = context;
+  const { handleRegistrationModal, isFormOpen } = useFormModalContext();
 
   return (
     <>

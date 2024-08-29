@@ -1,18 +1,13 @@
-import { FormModalContext } from "../context/form-modal-context";
+import { useFormModalContext } from "../hooks/useFormModalContext";
 import { Ellipsis, Pencil, Trash2 } from "lucide-react";
-import { useState, useContext } from "react";
-import logo from "../assets/img/logo.svg";
+import { useState } from "react";
 import "../css/card-job.css";
+import logo from "../assets/img/logo.svg";
 
 export const CardJob: React.FC = () => {
   // lida com modal de ações (editar/deletar) no mobile
   const [showActions, setShowActions] = useState<boolean>(false);
-
-  const context = useContext(FormModalContext);
-  if (!context) {
-    throw new Error();
-  }
-  const { handleEditModal } = context;
+  const { handleEditModal } = useFormModalContext();
 
   const handleEditButtonClick = () => {
     handleEditModal();
