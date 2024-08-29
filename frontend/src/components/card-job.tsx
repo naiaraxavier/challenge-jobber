@@ -1,13 +1,22 @@
+import { FormModalContext } from "../context/form-modal-context";
 import { Ellipsis, Pencil, Trash2 } from "lucide-react";
+import { useState, useContext } from "react";
 import logo from "../assets/img/logo.svg";
-import { useState } from "react";
 import "../css/card-job.css";
 
-export function CardJob() {
+export const CardJob: React.FC = () => {
+  // lida com modal de ações (editar/deletar) no mobile
   const [showActions, setShowActions] = useState<boolean>(false);
 
-  const handleModalBtns = (): void => {
-    setShowActions(!showActions);
+  const context = useContext(FormModalContext);
+  if (!context) {
+    throw new Error();
+  }
+  const { handleEditModal } = context;
+
+  const handleEditButtonClick = () => {
+    handleEditModal();
+    setShowActions(false);
   };
 
   return (
@@ -15,7 +24,7 @@ export function CardJob() {
       <Ellipsis
         size={28}
         className="ellipsis-button"
-        onClick={handleModalBtns}
+        onClick={() => setShowActions(!showActions)}
       />
       <div className="card__content--img">
         <img src={logo} alt="Imagem" />
@@ -30,7 +39,7 @@ export function CardJob() {
 
       <div
         className={`modal-overlay ${showActions ? "visible" : ""}`}
-        onClick={handleModalBtns}
+        onClick={() => setShowActions(!showActions)}
       ></div>
 
       <div
@@ -38,10 +47,10 @@ export function CardJob() {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="modal-actions--btns">
-          <Pencil className="update-button" />
+          <Pencil className="update-button" onClick={handleEditButtonClick} />
           <Trash2 className="delete-button" />
         </div>
       </div>
     </div>
   );
-}
+};

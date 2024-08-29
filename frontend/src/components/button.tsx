@@ -3,7 +3,7 @@ import "../css/button.css";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
-  size?: "1" | "2" | "3" | "4";
+  size?: "1" | "2";
 }
 
 export function Button({ children, size = "1", ...props }: ButtonProps) {

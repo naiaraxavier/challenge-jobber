@@ -1,10 +1,19 @@
-import { Plus } from "lucide-react";
+import { CreateUpdateModal } from "../components/create-update-modal";
+import { FormModalContext } from "../context/form-modal-context";
+import { CardJob } from "../components/card-job";
 import { Button } from "../components/button";
 import { Header } from "../components/header";
+import { Plus } from "lucide-react";
+import { useContext } from "react";
 import "../css/home-page.css";
-import { CardJob } from "../components/card-job";
 
-export function HomePage() {
+export const HomePage: React.FC = () => {
+  const context = useContext(FormModalContext);
+  if (!context) {
+    throw new Error();
+  }
+  const { handleRegistrationModal, isFormOpen } = context;
+
   return (
     <>
       <Header />
@@ -13,7 +22,7 @@ export function HomePage() {
         <div className="main-content__container">
           <div className="main-content__header">
             <h2>Lista de trabalhos</h2>
-            <Button size="1">
+            <Button size="1" onClick={handleRegistrationModal}>
               <Plus size={18} strokeWidth={3} />
               Cadastrar trabalho
             </Button>
@@ -26,9 +35,11 @@ export function HomePage() {
         </div>
 
         <CardJob />
+
+        {isFormOpen && <CreateUpdateModal />}
       </main>
 
       <footer></footer>
     </>
   );
-}
+};
