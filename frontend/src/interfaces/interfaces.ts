@@ -8,6 +8,7 @@ export interface Job {
 
 export interface CardJobProps {
   job: Job;
+  onDelete: (id: number) => void;
 }
 
 export interface Payload {

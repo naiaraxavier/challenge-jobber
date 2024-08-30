@@ -10,12 +10,22 @@ import "../css/home-page.css";
 
 export const HomePage = () => {
   const { handleRegistrationModal, isFormOpen } = useFormModalContext();
-  const { data: jobs, error, isLoading, get } = useApi();
+  const { data: jobs, error, isLoading, get, del, setData } = useApi();
 
   useEffect(() => {
     get("/api/jobs/");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Deleta um item
+  const handleDelete = async (id: number) => {
+    try {
+      await del(`/api/jobs/${id}/`);
+      setData(jobs ? jobs.filter((job) => job.id !== id) : null);
+    } catch (err) {
+      console.error("Erro ao deletar", err);
+    }
+  };
 
   return (
     <>
@@ -43,7 +53,9 @@ export const HomePage = () => {
           ) : error ? (
             <p>{error}</p>
           ) : (
-            jobs?.map((job) => <CardJob key={job.id} job={job} />)
+            jobs?.map((job) => (
+              <CardJob key={job.id} job={job} onDelete={handleDelete} />
+            ))
           )}
         </div>
 

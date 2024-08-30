@@ -25,7 +25,7 @@ export const CreateUpdateModal = () => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     post(data, "/api/jobs/");
-    // window.document.location.reload();
+    window.document.location.reload();
   };
 
   return (

@@ -5,9 +5,9 @@ import logo from "../assets/img/logo.svg";
 import { useState } from "react";
 import "../css/card-job.css";
 
-export const CardJob = ({ job }: CardJobProps) => {
+export const CardJob = ({ job, onDelete }: CardJobProps) => {
   // props
-  const { title, description, image, created_at } = job;
+  const { id, title, description, image, created_at } = job;
 
   // lida com modal de ações (editar/deletar) no mobile
   const [showActions, setShowActions] = useState<boolean>(false);
@@ -52,7 +52,7 @@ export const CardJob = ({ job }: CardJobProps) => {
       >
         <div className="modal-actions--btns">
           <Pencil className="update-button" onClick={handleEditButtonClick} />
-          <Trash2 className="delete-button" />
+          <Trash2 className="delete-button" onClick={() => onDelete(id)} />
         </div>
       </div>
     </div>
