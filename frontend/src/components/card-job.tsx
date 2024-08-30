@@ -1,11 +1,11 @@
 import { useFormModalContext } from "../hooks/useFormModalContext";
 import { Ellipsis, Pencil, Trash2 } from "lucide-react";
 import { CardJobProps } from "../interfaces/interfaces";
-import logo from "../assets/img/logo.svg";
+import imageDefault from "../assets/img/default.svg";
 import { useState } from "react";
 import "../css/card-job.css";
 
-export const CardJob = ({ job, onDelete }: CardJobProps) => {
+export const CardJob = ({ job, onDelete, handleEdit }: CardJobProps) => {
   // props
   const { id, title, description, image, created_at } = job;
 
@@ -23,6 +23,7 @@ export const CardJob = ({ job, onDelete }: CardJobProps) => {
   const handleEditButtonClick = () => {
     handleEditModal();
     setShowActions(false);
+    handleEdit(id);
   };
 
   return (
@@ -33,7 +34,7 @@ export const CardJob = ({ job, onDelete }: CardJobProps) => {
         onClick={() => setShowActions(!showActions)}
       />
       <div className="card__content--img">
-        <img src={image || logo} alt="Imagem" />
+        <img src={image || imageDefault} alt="Imagem" />
       </div>
       <div className="card__content--info">
         <p className="card__content--title">{title}</p>

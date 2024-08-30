@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Job, Payload } from "../interfaces/interfaces";
+import { Job } from "../interfaces/interfaces";
 import { api } from "../lib/axios";
-import { AxiosResponse, AxiosError } from "axios";
+import { AxiosError } from "axios";
 
 export const useApi = () => {
   const [data, setData] = useState<Job[] | null>(null);
@@ -31,12 +31,12 @@ export const useApi = () => {
   const post = async (payload: FormData, endpoint: string) => {
     setIsLoading(true);
     try {
-      const response: AxiosResponse = await api.post(endpoint, payload, {
+      const response = await api.post(endpoint, payload, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-      setData(response.data);
+      return response.data;
     } catch (err) {
       if (err instanceof AxiosError) {
         if (err.status === 400) {
@@ -53,33 +53,41 @@ export const useApi = () => {
   };
 
   // Função para fazer a requisição PUT
-  const put = async (payload: Payload, endpoint: string) => {
+  const put = async (payload: FormData, endpoint: string) => {
     setIsLoading(true);
     try {
-      const response = await api.put(endpoint, payload);
-      setData(response.data);
+      const response = await api.put(endpoint, payload, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return response.data;
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message);
       } else {
-        setError("An unknown error occurred");
+        setError("Erro desconhecido");
       }
+      console.log(err);
     } finally {
       setIsLoading(false);
     }
   };
 
   // Função para fazer a requisição PATCH
-  const patch = async (payload: Payload, endpoint: string) => {
+  const patch = async (payload: FormData, endpoint: string) => {
     setIsLoading(true);
     try {
-      const response = await api.patch(endpoint, payload);
-      setData(response.data);
+      await api.patch(endpoint, payload, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message);
       } else {
-        setError("An unknown error occurred");
+        setError("Erro desconhecido");
       }
     } finally {
       setIsLoading(false);
@@ -95,7 +103,7 @@ export const useApi = () => {
       if (err instanceof Error) {
         setError(err.message);
       } else {
-        setError("An unknown error occurred");
+        setError("Erro desconhecido");
       }
     } finally {
       setIsLoading(false);

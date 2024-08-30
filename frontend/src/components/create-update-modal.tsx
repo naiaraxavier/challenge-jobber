@@ -1,14 +1,19 @@
+import { CreateUpdateModalProps } from "../interfaces/interfaces";
 import { useFormModalContext } from "../hooks/useFormModalContext";
 import { Tag, X, ImageUp, Text } from "lucide-react";
 import React, { useState, FormEvent } from "react";
 import { Button } from "../components/button";
-import "../css/create-update-modal.css";
 import { useApi } from "../hooks/useApi";
+import "../css/create-update-modal.css";
 
-export const CreateUpdateModal = () => {
+export const CreateUpdateModal = ({
+  idJob,
+  updateJobs,
+  addJob,
+}: CreateUpdateModalProps) => {
   const [fileName, setFileName] = useState<string>("");
   const { handleCloseModal, isEditing } = useFormModalContext();
-  const { post, error } = useApi();
+  const { post, put, error } = useApi();
 
   // Lida com a informação do arquivo de imagem
   const handleFileToggle = ({
@@ -20,12 +25,30 @@ export const CreateUpdateModal = () => {
     }
   };
 
-  // Cria/edita
-  const createUpdateJob = async (event: FormEvent<HTMLFormElement>) => {
+  // Cria ou atualiza um job
+  const createUpdateJob = async (
+    event: FormEvent<HTMLFormElement>,
+    isEditing: boolean
+  ) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    post(data, "/api/jobs/");
-    window.document.location.reload();
+    const formData = new FormData(event.currentTarget);
+
+    try {
+      if (isEditing && idJob) {
+        const response = await put(formData, `/api/jobs/${idJob}/`);
+        updateJobs(response);
+        console.log(response);
+      } else {
+        const response = await post(formData, "/api/jobs/");
+        addJob(response);
+      }
+
+      handleCloseModal();
+    } catch (error) {
+      throw new Error(
+        `Error during ${isEditing ? "edit" : "creation"}: ${error}`
+      );
+    }
   };
 
   return (
@@ -35,7 +58,7 @@ export const CreateUpdateModal = () => {
           <h2>{isEditing ? "Editar" : "Cadastrar"} trabalho</h2>
           <X className="close-button" onClick={handleCloseModal} />
         </div>
-        <form onSubmit={createUpdateJob}>
+        <form onSubmit={(event) => createUpdateJob(event, isEditing)}>
           <div className="input-group">
             <Tag className="tag" />
             <input name="title" placeholder="Título" className="input--title" />
