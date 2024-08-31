@@ -1,7 +1,7 @@
 import { CreateUpdateModalProps } from "../interfaces/interfaces";
 import { useFormModalContext } from "../hooks/useFormModalContext";
+import React, { useState, FormEvent, useEffect } from "react";
 import { Tag, X, ImageUp, Text } from "lucide-react";
-import React, { useState, FormEvent } from "react";
 import { Button } from "../components/button";
 import { useApi } from "../hooks/useApi";
 import "../css/create-update-modal.css";
@@ -11,9 +11,35 @@ export const CreateUpdateModal = ({
   updateJobs,
   addJob,
 }: CreateUpdateModalProps) => {
-  const [fileName, setFileName] = useState<string>("");
   const { handleCloseModal, isEditing } = useFormModalContext();
-  const { post, put, error } = useApi();
+  const [checkFields, setCheckFields] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [fileName, setFileName] = useState<string>("");
+  const [dataLoaded, setDataLoaded] = useState<boolean>(false);
+  const [title, setTitle] = useState<string>("");
+  const { post, put, getById } = useApi();
+
+  /* dataLoaded evita que os dados sejam
+  chamados toda vez que o componente renderiza
+  possibilidando mudar os valores do input */
+
+  useEffect(() => {
+    // Carregar dados do job para edição
+    if (isEditing && idJob && !dataLoaded) {
+      getById(`/api/jobs/${idJob}/`)
+        .then((response) => {
+          setTitle(response.title || "");
+          setDescription(response.description || "");
+          setFileName(response.image || "");
+          setDataLoaded(true);
+        })
+        .catch((err) => {
+          console.error("Erro ao carregar job", err);
+        });
+    }
+  }, [isEditing, idJob, getById, dataLoaded]);
+
+  console.log("depois if " + dataLoaded);
 
   // Lida com a informação do arquivo de imagem
   const handleFileToggle = ({
@@ -33,21 +59,28 @@ export const CreateUpdateModal = ({
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
 
+    const title = formData.get("title")?.toString().trim();
+    const description = formData.get("description")?.toString().trim();
+
+    if (!title || !description) {
+      setCheckFields("Preencha todos os campos obrigatórios!");
+      return;
+    }
+
     try {
       if (isEditing && idJob) {
         const response = await put(formData, `/api/jobs/${idJob}/`);
         updateJobs(response);
-        console.log(response);
       } else {
         const response = await post(formData, "/api/jobs/");
         addJob(response);
       }
-
-      handleCloseModal();
     } catch (error) {
       throw new Error(
         `Error during ${isEditing ? "edit" : "creation"}: ${error}`
       );
+    } finally {
+      handleCloseModal();
     }
   };
 
@@ -61,7 +94,13 @@ export const CreateUpdateModal = ({
         <form onSubmit={(event) => createUpdateJob(event, isEditing)}>
           <div className="input-group">
             <Tag className="tag" />
-            <input name="title" placeholder="Título" className="input--title" />
+            <input
+              name="title"
+              placeholder="Título"
+              className="input--title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
           </div>
 
           <div className="input-group">
@@ -70,6 +109,8 @@ export const CreateUpdateModal = ({
               name="description"
               placeholder="Descrição"
               className="input--description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
             />
           </div>
           <div className="input-group-img">
@@ -91,7 +132,9 @@ export const CreateUpdateModal = ({
             )}
           </div>
           <Button size="2">{isEditing ? "Editar" : "Salvar"}</Button>
-          {error && <div className="error-message">{error}</div>}
+          {checkFields && (
+            <div className="check-fields__message">{checkFields}</div>
+          )}
         </form>
       </div>
     </div>

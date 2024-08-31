@@ -74,14 +74,17 @@ export const HomePage = () => {
           ) : error ? (
             <p className="error">{error}</p>
           ) : (
-            jobs?.map((job) => (
-              <CardJob
-                key={job.id}
-                job={job}
-                onDelete={handleDelete}
-                handleEdit={handleEdit}
-              />
-            ))
+            jobs?.map(
+              (job) =>
+                job?.id && (
+                  <CardJob
+                    key={job.id}
+                    job={job}
+                    onDelete={handleDelete}
+                    handleEdit={handleEdit}
+                  />
+                )
+            )
           )}
         </div>
 

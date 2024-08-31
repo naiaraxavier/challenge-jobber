@@ -27,6 +27,23 @@ export const useApi = () => {
     }
   };
 
+  // Função para fazer a requisição GET para um recurso específico por ID
+  const getById = async (endpoint: string) => {
+    setIsLoading(true);
+    try {
+      const response = await api.get(endpoint);
+      return response.data;
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(`Ocorreu um erro: ${err.message} !`);
+      } else {
+        setError("Erro desconhecido");
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   // Função para fazer a requisição POST
   const post = async (payload: FormData, endpoint: string) => {
     setIsLoading(true);
@@ -120,5 +137,7 @@ export const useApi = () => {
     patch,
     del,
     setData,
+    setError,
+    getById,
   };
 };
