@@ -104,12 +104,48 @@
   font-size: 14px;
 }
 
+.input--title:focus,
+.input--description:focus {
+  background-color: var(--color-background-primary);
+  border-color: #27272a;
+  outline: none;
+}
+
+/* Cor de fundo do autocomplete */
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px var(--color-background-primary) inset;
+  -webkit-text-fill-color: var(--color-text-primary) !important;
+  border-color: #27272a;
+  outline: none;
+}
+
 input[type="file"] {
   display: none;
 }
 
 .upload-button {
   width: 100%;
+}
+
+/* Mensagem de erro */
+.check-fields__message {
+  color: #f02f4c;
+  margin-top: 16px;
+}
+
+.input-error {
+  border: 1px solid #f02f4c;
+}
+
+.check-fields__message::before {
+  background-image: url("../assets/img/error.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  content: "";
+  display: inline-block;
+  height: 16px;
+  margin-right: 8px;
+  width: 16px;
 }
 
 /* TABLET */

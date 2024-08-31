@@ -30,7 +30,7 @@ export const CreateUpdateModal = ({
         .then((response) => {
           setTitle(response.title || "");
           setDescription(response.description || "");
-          setFileName(response.image || "");
+          // setFileName(response.image || "");
           setDataLoaded(true);
         })
         .catch((err) => {
@@ -97,7 +97,9 @@ export const CreateUpdateModal = ({
             <input
               name="title"
               placeholder="Título"
-              className="input--title"
+              className={`input--title ${
+                checkFields && !title ? "input-error" : ""
+              }`}
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
@@ -108,7 +110,9 @@ export const CreateUpdateModal = ({
             <input
               name="description"
               placeholder="Descrição"
-              className="input--description"
+              className={`input--description ${
+                checkFields && !description ? "input-error" : ""
+              }`}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />

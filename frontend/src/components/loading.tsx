@@ -6,7 +6,7 @@ export const Loading = () => {
       visible={true}
       height="60"
       width="60"
-      color="#d301fa"
+      color="#3e3d3d"
       radius="9"
       ariaLabel="three-dots-loading"
       wrapperStyle={{}}
