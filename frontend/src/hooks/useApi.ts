@@ -1,7 +1,7 @@
-import { useState } from "react";
 import { Job } from "../interfaces/interfaces";
 import { api } from "../lib/axios";
 import { AxiosError } from "axios";
+import { useState } from "react";
 
 export const useApi = () => {
   const [data, setData] = useState<Job[] | null>(null);
@@ -17,7 +17,7 @@ export const useApi = () => {
       console.log(response.data);
     } catch (err) {
       if (err instanceof Error) {
-        setError(`Ocorreu um erro: ${err.message}`);
+        setError(`Ocorreu um erro: ${err.message} !`);
         console.log(err);
       } else {
         setError("Erro desconhecido");
@@ -42,7 +42,7 @@ export const useApi = () => {
         if (err.status === 400) {
           setError("Título e Descrição são campos obrigatórios");
         } else {
-          setError(`Ocorreu um erro: ${err.message}`);
+          setError(`Ocorreu um erro: ${err.message} !`);
         }
       } else {
         setError("Erro desconhecido");

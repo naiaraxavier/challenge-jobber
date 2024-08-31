@@ -35,6 +35,27 @@
   margin-top: 100px;
 }
 
+/* Mensagem de erro */
+.error {
+  align-items: center;
+  color: #f02f4c;
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
+}
+
+.error::before {
+  background-image: url("../assets/img/error.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  content: "";
+  display: inline-block;
+  height: 18px;
+  margin-right: 16px;
+  vertical-align: middle;
+  width: 18px;
+}
+
 /* TABLET */
 @media (min-width: 640px) {
   .main-content__container {

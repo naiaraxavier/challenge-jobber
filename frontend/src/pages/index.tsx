@@ -72,7 +72,7 @@ export const HomePage = () => {
           {isLoading ? (
             <Loading />
           ) : error ? (
-            <p>{error}</p>
+            <p className="error">{error}</p>
           ) : (
             jobs?.map((job) => (
               <CardJob

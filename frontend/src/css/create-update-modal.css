@@ -114,14 +114,11 @@ input[type="file"] {
 
 /* TABLET */
 @media (min-width: 640px) {
-  /* Modal */
   .modal {
     margin: 0;
     max-width: 32rem;
     padding: 2rem 1.5rem;
   }
-
-  /* Modal Título */
   .modal-header {
     margin-bottom: 2rem;
   }
@@ -129,8 +126,6 @@ input[type="file"] {
   .modal-header h2 {
     font-size: 1.25rem;
   }
-
-  /* Input */
   .input-group {
     margin-bottom: 1.5rem;
   }
@@ -144,4 +139,8 @@ input[type="file"] {
   .input--description::placeholder {
     font-size: 1rem;
   }
+
+  /* Modal */
+  /* Modal Título */
+  /* Input */
 }
