@@ -1,6 +1,7 @@
 import { CreateUpdateModal } from "../components/create-update-modal";
 import { useFormModalContext } from "../hooks/useFormModalContext";
 import { CardJob } from "../components/card-job";
+import { Loading } from "../components/loading";
 import { Job } from "../interfaces/interfaces";
 import { Header } from "../components/header";
 import { Button } from "../components/button";
@@ -69,7 +70,7 @@ export const HomePage = () => {
 
         <div className="main_content__cards">
           {isLoading ? (
-            <p>Carregando...</p>
+            <Loading />
           ) : error ? (
             <p>{error}</p>
           ) : (

@@ -28,6 +28,13 @@
   margin-bottom: 2.5rem;
 }
 
+/* Loading */
+.loading {
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
+}
+
 /* TABLET */
 @media (min-width: 640px) {
   .main-content__container {
