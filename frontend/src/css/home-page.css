@@ -1,6 +1,11 @@
 /* Container main header */
 .main-content__container {
+  background-color: var(--color-background-primary);
   padding: 0 1rem;
+  padding-bottom: 1px;
+  position: sticky;
+  top: -1px;
+  z-index: 80;
 }
 
 .main-content__header {
@@ -14,7 +19,7 @@
 
 .main-content__header h2 {
   font-size: 1.25rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .main-content__title {
@@ -42,6 +47,7 @@
   display: flex;
   justify-content: center;
   margin-top: 100px;
+  text-align: center;
 }
 
 .error::before {
@@ -55,12 +61,18 @@
   width: 18px;
 }
 
+/* Mensagem quando não tem jobs */
+.no-jobs {
+  align-items: center;
+  color: #d301fa;
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
+  text-align: center;
+}
+
 /* TABLET */
 @media (min-width: 640px) {
-  .main-content__container {
-    margin: 1rem 0 1.5rem 0;
-  }
-
   .main-content__header {
     flex-direction: row;
     justify-content: space-between;
@@ -80,13 +92,21 @@
 
 /* DESKTOP */
 @media (min-width: 1024px) {
+  .wrapper-title {
+    display: flex;
+    margin: 0 auto;
+    max-width: 1260px;
+    width: 100%;
+  }
+
   .main-content__title {
     display: grid;
     font-weight: 600;
     grid-template-columns: repeat(3, 1fr);
     list-style: none;
     margin: 0 auto;
-    max-width: 956px;
+    padding-bottom: 16px;
     text-align: center;
+    width: 80%;
   }
 }

@@ -7,6 +7,7 @@
   margin: 0 1rem;
   padding: 2.5rem 1rem 2rem 1rem;
   position: relative;
+  overflow: hidden;
 }
 
 .ellipsis-button {
@@ -19,6 +20,9 @@
 
 .card__content--info {
   width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 80%;
 }
 
 .card__content--img {
@@ -44,23 +48,25 @@
   font-size: 1rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 90%;
 }
 
 .card__content--description {
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  display: -webkit-box;
   font-size: 0.875rem;
-  line-clamp: 2;
   margin: 0 0 1rem 0;
   overflow: hidden;
   text-overflow: ellipsis;
+  max-width: 90%;
 }
 
 .card__content--date {
   font-size: 0.75rem;
   font-weight: 500;
   text-align: right;
+  overflow: hidden;
+  max-width: 100%;
 }
 
 /* Modal Buttons */
@@ -95,7 +101,6 @@
   top: -18px;
   transform: translateX(-50%);
   z-index: 1000;
-
   border-color: transparent transparent var(--color-background-tertiary)
     transparent;
 }
@@ -195,6 +200,7 @@
   .card__content--info {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
   }
 
   .card__content--title,

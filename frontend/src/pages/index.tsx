@@ -61,11 +61,6 @@ export const HomePage = () => {
               Cadastrar trabalho
             </Button>
           </div>
-          <ul className="main-content__title">
-            <li>Título</li>
-            <li>Descrição</li>
-            <li>Criado em</li>
-          </ul>
         </div>
 
         <div className="main_content__cards">
@@ -73,18 +68,29 @@ export const HomePage = () => {
             <Loading />
           ) : error ? (
             <p className="error">{error}</p>
+          ) : jobs?.length === 0 ? (
+            <p className="no-jobs">Atualmente, não há trabalhos cadastrados.</p>
           ) : (
-            jobs?.map(
-              (job) =>
-                job?.id && (
-                  <CardJob
-                    key={job.id}
-                    job={job}
-                    onDelete={handleDelete}
-                    handleEdit={handleEdit}
-                  />
-                )
-            )
+            <>
+              <div className="wrapper-title">
+                <ul className="main-content__title">
+                  <li>Título</li>
+                  <li>Descrição</li>
+                  <li>Criado em</li>
+                </ul>
+              </div>
+              {jobs?.map(
+                (job) =>
+                  job?.id && (
+                    <CardJob
+                      key={job.id}
+                      job={job}
+                      onDelete={handleDelete}
+                      handleEdit={handleEdit}
+                    />
+                  )
+              )}
+            </>
           )}
         </div>
 
