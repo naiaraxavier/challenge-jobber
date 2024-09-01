@@ -13,7 +13,7 @@ export const JobDetailsModal = ({
 }: JobDetailsModalProps) => {
   return (
     <div className="overlay">
-      <div className="modal">
+      <div className="details-job__modal">
         <div className="close-details-modal">
           <X className="close" onClick={handleDetailsModal} />
         </div>

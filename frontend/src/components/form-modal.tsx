@@ -4,7 +4,7 @@ import React, { useState, FormEvent, useEffect } from "react";
 import { Tag, X, ImageUp, Text } from "lucide-react";
 import { Button } from "../components/button";
 import { useApi } from "../hooks/useApi";
-import "../css/create-update-modal.css";
+import "../css/form-modal.css";
 
 export const CreateUpdateModal = ({
   idJob,
@@ -12,10 +12,11 @@ export const CreateUpdateModal = ({
   addJob,
 }: CreateUpdateModalProps) => {
   const { handleCloseModal, isEditing } = useFormModalContext();
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [dataLoaded, setDataLoaded] = useState<boolean>(false);
   const [checkFields, setCheckFields] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [fileName, setFileName] = useState<string>("");
-  const [dataLoaded, setDataLoaded] = useState<boolean>(false);
   const [title, setTitle] = useState<string>("");
   const { post, put, getById } = useApi();
 
@@ -30,7 +31,7 @@ export const CreateUpdateModal = ({
         .then((response) => {
           setTitle(response.title || "");
           setDescription(response.description || "");
-          // setFileName(response.image || "");
+          setImageUrl(response.image || "");
           setDataLoaded(true);
         })
         .catch((err) => {
@@ -46,6 +47,11 @@ export const CreateUpdateModal = ({
     if ("files" in target) {
       const file = target.files?.[0];
       setFileName(file ? file.name : "");
+
+      if (file) {
+        // Remova a imagem atual se um novo arquivo for escolhido
+        setImageUrl(null);
+      }
     }
   };
 
@@ -63,6 +69,11 @@ export const CreateUpdateModal = ({
     if (!title || !description) {
       setCheckFields("Preencha todos os campos obrigatórios!");
       return;
+    }
+
+    // Não adiciona o campo de imagem se uma nova imagem não for selecionada
+    if (!fileName) {
+      formData.delete("image");
     }
 
     try {
@@ -115,6 +126,14 @@ export const CreateUpdateModal = ({
               onChange={(e) => setDescription(e.target.value)}
             />
           </div>
+
+          {imageUrl && (
+            <div className="current-image">
+              <p>Imagem atual:</p>
+              <img src={imageUrl} alt="Imagem atual do trabalho" />
+            </div>
+          )}
+
           <div className="input-group-img">
             <label htmlFor="imageUpload" className="upload-button button">
               <ImageUp />

@@ -47,7 +47,7 @@
 /* Mensagem de erro */
 .error {
   align-items: center;
-  color: #f02f4c;
+  color: var(--color-btn-secondary);
   display: flex;
   justify-content: center;
   margin-top: 100px;
@@ -68,7 +68,7 @@
 /* Mensagem quando não tem jobs */
 .no-jobs {
   align-items: center;
-  color: #d301fa;
+  color: var(--color-logo);
   display: flex;
   justify-content: center;
   margin-top: 100px;
