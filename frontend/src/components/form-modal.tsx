@@ -49,7 +49,7 @@ export const CreateUpdateModal = ({
       setFileName(file ? file.name : "");
 
       if (file) {
-        // Remova a imagem atual se um novo arquivo for escolhido
+        // Remove a imagem atual se um novo arquivo for escolhido
         setImageUrl(null);
       }
     }
