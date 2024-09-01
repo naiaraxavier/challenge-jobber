@@ -146,7 +146,7 @@ cd challenge-jobber
 3. **Rode o servidor de desenvolvimento:**
 
    ```bash
-   npm start
+   npm run dev
    ```
 
 4. **Acesse o frontend no navegador:**
