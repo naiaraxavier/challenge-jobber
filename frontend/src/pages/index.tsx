@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { useApi } from "../hooks/useApi";
 import { Plus } from "lucide-react";
 import "../css/home-page.css";
+import { Footer } from "../components/footer";
 
 export const HomePage = () => {
   const { handleRegistrationModal, isFormOpen } = useFormModalContext();
@@ -49,7 +50,7 @@ export const HomePage = () => {
   };
 
   return (
-    <>
+    <body>
       <Header />
 
       <main className="main-content">
@@ -103,7 +104,7 @@ export const HomePage = () => {
         )}
       </main>
 
-      <footer></footer>
-    </>
+      <Footer />
+    </body>
   );
 };

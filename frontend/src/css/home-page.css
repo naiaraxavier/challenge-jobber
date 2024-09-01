@@ -1,4 +1,8 @@
 /* Container main header */
+.main-content {
+  min-height: 100vh;
+}
+
 .main-content__container {
   background-color: var(--color-background-primary);
   padding: 0 1rem;
