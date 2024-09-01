@@ -6,10 +6,10 @@ import { X } from "lucide-react";
 
 export const JobDetailsModal = ({
   handleDetailsModal,
-  image,
-  title,
   description,
   created_at,
+  title,
+  image,
 }: JobDetailsModalProps) => {
   return (
     <div className="overlay">

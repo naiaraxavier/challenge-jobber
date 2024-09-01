@@ -1,15 +1,15 @@
-import { CreateUpdateModal } from "../components/form-modal";
 import { useFormModalContext } from "../hooks/useFormModalContext";
+import { CreateUpdateModal } from "../components/form-modal";
 import { CardJob } from "../components/card-job";
 import { Loading } from "../components/loading";
 import { Job } from "../interfaces/interfaces";
 import { Header } from "../components/header";
 import { Button } from "../components/button";
+import { Footer } from "../components/footer";
 import { useEffect, useState } from "react";
 import { useApi } from "../hooks/useApi";
 import { Plus } from "lucide-react";
 import "../css/home-page.css";
-import { Footer } from "../components/footer";
 
 export const HomePage = () => {
   const { handleRegistrationModal, isFormOpen } = useFormModalContext();
@@ -95,6 +95,7 @@ export const HomePage = () => {
           )}
         </div>
 
+        {/* Formulário de Criar/Editar um Job */}
         {isFormOpen && (
           <CreateUpdateModal
             idJob={idJob}

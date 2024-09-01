@@ -1,22 +1,22 @@
 export interface Job {
-  id: number;
-  title: string;
   description: string;
-  image: string;
   created_at: string;
+  image: string;
+  title: string;
+  id: number;
 }
 
 export interface Payload {
-  id?: number;
-  title: string;
   description: string;
   image?: string;
+  title: string;
+  id?: number;
 }
 
 export interface CardJobProps {
-  job: Job;
-  onDelete: (id: number) => void;
   handleEdit: (id: number) => void;
+  onDelete: (id: number) => void;
+  job: Job;
 }
 
 export interface CreateUpdateModalProps {
@@ -27,8 +27,8 @@ export interface CreateUpdateModalProps {
 
 export interface JobDetailsModalProps {
   handleDetailsModal: () => void;
-  title: string;
   description: string;
-  image?: string;
   created_at: string;
+  image?: string;
+  title: string;
 }

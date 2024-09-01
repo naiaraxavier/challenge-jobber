@@ -25,7 +25,7 @@ export const useApi = () => {
     }
   };
 
-  // Função para fazer a requisição GET para um recurso específico por ID
+  // Função para fazer a requisição GET por ID
   const getById = async (endpoint: string) => {
     setIsLoading(true);
     try {
