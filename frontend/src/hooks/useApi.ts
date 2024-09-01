@@ -14,11 +14,9 @@ export const useApi = () => {
     try {
       const response = await api.get(endpoint);
       setData(response.data);
-      console.log(response.data);
     } catch (err) {
       if (err instanceof Error) {
         setError(`Ocorreu um erro: ${err.message} !`);
-        console.log(err);
       } else {
         setError("Erro desconhecido");
       }

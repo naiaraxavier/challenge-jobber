@@ -4,8 +4,8 @@ export interface FormModalContextType {
   setIsFormOpen: Dispatch<SetStateAction<boolean>>;
   setIsEditing: Dispatch<SetStateAction<boolean>>;
   handleRegistrationModal: () => void;
-  handleEditModal: () => void;
   handleCloseModal: () => void;
+  handleEditModal: () => void;
   isFormOpen: boolean;
   isEditing: boolean;
 }

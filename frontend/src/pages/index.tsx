@@ -1,4 +1,4 @@
-import { CreateUpdateModal } from "../components/create-update-modal";
+import { CreateUpdateModal } from "../components/form-modal";
 import { useFormModalContext } from "../hooks/useFormModalContext";
 import { CardJob } from "../components/card-job";
 import { Loading } from "../components/loading";
@@ -50,7 +50,7 @@ export const HomePage = () => {
   };
 
   return (
-    <body>
+    <>
       <Header />
 
       <main className="main-content">
@@ -105,6 +105,6 @@ export const HomePage = () => {
       </main>
 
       <Footer />
-    </body>
+    </>
   );
 };

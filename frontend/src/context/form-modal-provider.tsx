@@ -8,7 +8,9 @@ interface FormModalProviderProps {
 export const FormModalProvider: React.FC<FormModalProviderProps> = ({
   children,
 }) => {
+  // Modal de formulário criar/editar
   const [isFormOpen, setIsFormOpen] = useState<boolean>(false);
+  // Saber quando o form vai abrir no modo editar
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
   // Abre modal para cadastro
@@ -22,7 +24,7 @@ export const FormModalProvider: React.FC<FormModalProviderProps> = ({
     setIsEditing(!isEditing);
   };
 
-  // Fecha modal
+  // Fecha modal de form
   const handleCloseModal = () => {
     setIsFormOpen(!isFormOpen);
     setIsEditing(false);

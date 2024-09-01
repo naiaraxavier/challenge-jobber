@@ -39,8 +39,6 @@ export const CreateUpdateModal = ({
     }
   }, [isEditing, idJob, getById, dataLoaded]);
 
-  console.log("depois if " + dataLoaded);
-
   // Lida com a informação do arquivo de imagem
   const handleFileToggle = ({
     target,

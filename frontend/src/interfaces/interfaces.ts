@@ -24,3 +24,11 @@ export interface CreateUpdateModalProps {
   addJob: (newJob: Job) => void;
   idJob: number | undefined;
 }
+
+export interface JobDetailsModalProps {
+  handleDetailsModal: () => void;
+  title: string;
+  description: string;
+  image?: string;
+  created_at: string;
+}
