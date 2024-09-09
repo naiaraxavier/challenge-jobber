@@ -26,6 +26,7 @@ router = routers.DefaultRouter()
 router.register(r"jobs", JobsViewSet)
 
 urlpatterns = [
+    path("api-auth/", include("rest_framework.urls")),
     path("admin/", admin.site.urls),
     path("api/", include(router.urls)),
 ]
