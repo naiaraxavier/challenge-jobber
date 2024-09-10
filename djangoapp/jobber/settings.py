@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # /data/we/media
 DATA_DIR = BASE_DIR.parent / "data" / "web"
 
-PORT = os.getenv("PORT", "8000")
+# PORT = os.getenv("PORT", "8000")
 
 
 # Quick-start development settings - unsuitable for production
