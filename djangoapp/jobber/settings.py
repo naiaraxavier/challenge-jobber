@@ -12,7 +12,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 import os
 from pathlib import Path
-from dj_database_url import parse as dburl
+import dj_database_url
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -101,11 +102,10 @@ WSGI_APPLICATION = "jobber.wsgi.application"
 #     }
 # }
 
-DEFAULT_DBURL = "sqlite:///" + str(BASE_DIR / "db.sqlite3")
-DATABASES = {
-    "default": config("DATABASE_URL", default=DEFAULT_DBURL, cast=dburl),
+DATABASES  = {
+    'default': dj_database_url.config(default=config('DATABASE_URL'))
 }
-DATABASES["default"]["ENGINE"] = "django.db.backends.postgresql"
+
 
 
 # Password validation
