@@ -13,7 +13,8 @@ services:
     env_file:
       - ./dotenv_files/.env
     healthcheck:
-      test: ["CMD", "lsof", "-t", "-i:8000"]
+      # test: ["CMD", "lsof", "-t", "-i:8000"]
+      test: ["CMD-SHELL", "curl --silent --fail http://localhost:8000 || exit 1"]
       interval: 30s
       retries: 3
       start_period: 30s
