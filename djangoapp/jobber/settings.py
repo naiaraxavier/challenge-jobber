@@ -90,17 +90,22 @@ WSGI_APPLICATION = "jobber.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": os.getenv("DB_ENGINE", "change-me"),
+#         "NAME": os.getenv("POSTGRES_DB", "change-me"),
+#         "USER": os.getenv("POSTGRES_USER", "change-me"),
+#         "PASSWORD": os.getenv("POSTGRES_PASSWORD", "change-me"),
+#         "HOST": os.getenv("POSTGRES_HOST", "change-me"),
+#         "PORT": os.getenv("POSTGRES_PORT", "change-me"),
+#     }
+# }
+
+DEFAULT_DBURL = "sqlite:///" + str(BASE_DIR / "db.sqlite3")
 DATABASES = {
-    "default": {
-        'default': dj_database_url.config(default=config('DATABASE_URL'))
-        # "ENGINE": os.getenv("DB_ENGINE", "change-me"),
-        # "NAME": os.getenv("POSTGRES_DB", "change-me"),
-        # "USER": os.getenv("POSTGRES_USER", "change-me"),
-        # "PASSWORD": os.getenv("POSTGRES_PASSWORD", "change-me"),
-        # "HOST": os.getenv("POSTGRES_HOST", "change-me"),
-        # "PORT": os.getenv("POSTGRES_PORT", "change-me"),
-    }
+    "default": config("DATABASE_URL", default=DEFAULT_DBURL, cast=dburl),
 }
+DATABASES["default"]["ENGINE"] = "django.db.backends.postgresql"
 
 
 # Password validation
