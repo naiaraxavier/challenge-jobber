@@ -1,0 +1,42 @@
+.header {
+  background-color: var(--color-background-secondary);
+  box-shadow: 0 4px 8px var(--color-box-shadow);
+  padding: 18px 16px;
+}
+
+.header__logo {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+}
+
+.header__logo img {
+  height: 35px;
+  width: 35px;
+}
+
+.header__logo h1 {
+  font-family: var(--font-secondary);
+  font-size: 1.25rem;
+}
+
+/* DESKTOP */
+@media (min-width: 1024px) {
+  .header {
+    padding: 18px 0;
+  }
+
+  .header__logo {
+    margin: 0 auto;
+    max-width: 1260px;
+  }
+
+  .header__logo img {
+    height: 45px;
+    width: 45px;
+  }
+
+  .header__logo h1 {
+    font-size: 1.5rem;
+  }
+}
