@@ -1,37 +1,17 @@
 version: "3.9"
 services:
-  frontend:
-    container_name: frontend_jobber
-    build:
-      context: ./frontend
-    ports:
-      - 3000:3000
-    working_dir: /app-frontend
-    volumes:
-      - ./frontend/src:/app-frontend/src
-    tty: true # executa o container continuamente
-    # Os `healthcheck` devem garantir que a aplicação está
-    # operacional antes de liberar o container
-    healthcheck:
-      test: ["CMD", "lsof", "-t", "-i:3000"]
-      timeout: 10s
-      retries: 5
-    depends_on:
-      djangoapp:
-        condition: service_healthy
-
   djangoapp:
     container_name: djangoapp
     build:
-      context: ./backend
+      context: .
     ports:
       - 8000:8000
     volumes:
-      - ./backend/djangoapp:/djangoapp
-      - ./backend/data/web/static:/data/web/static/
-      - ./backend/data/web/media:/data/web/media/
+      - ./djangoapp:/djangoapp
+      - ./data/web/static:/data/web/static/
+      - ./data/web/media:/data/web/media/
     env_file:
-      - ./backend/dotenv_files/.env
+      - ./dotenv_files/.env
     healthcheck:
       test: ["CMD", "lsof", "-t", "-i:8000"]
       interval: 30s
@@ -45,6 +25,6 @@ services:
     container_name: psql
     image: postgres:13-alpine
     volumes:
-      - ./backend/data/postgres/data:/var/lib/postgresql/data/
+      - ./data/postgres/data:/var/lib/postgresql/data/
     env_file:
-      - ./backend/dotenv_files/.env
+      - ./dotenv_files/.env
