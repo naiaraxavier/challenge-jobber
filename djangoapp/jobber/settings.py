@@ -106,9 +106,31 @@ WSGI_APPLICATION = "jobber.wsgi.application"
 #     }
 # }
 
-DATABASES  = {
-    'default': dj_database_url.config(default=config('DATABASE_URL'))
-}
+# DATABASES  = {
+#     'default': dj_database_url.config(default=config('DATABASE_URL'))
+# }
+
+# Verifique se estamos no Heroku
+ON_HEROKU = 'DYNO' in os.environ
+
+if ON_HEROKU:
+    # Configurações específicas para o Heroku
+    DATABASES = {
+        'default': dj_database_url.config(default=config('DATABASE_URL'))
+    }
+    DEBUG = config('DEBUG', default=False, cast=bool)
+else:
+    # Configurações específicas para o ambiente local
+    DATABASES = {
+        'default': {
+            'ENGINE': config('DB_ENGINE'),
+            'NAME': config('POSTGRES_DB'),
+            'USER': config('POSTGRES_USER'),
+            'PASSWORD': config('POSTGRES_PASSWORD'),
+            'HOST': config('POSTGRES_HOST'),
+            'PORT': config('POSTGRES_PORT'),
+        }
+    }
 
 
 
