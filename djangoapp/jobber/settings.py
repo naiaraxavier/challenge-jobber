@@ -131,11 +131,11 @@ if ON_HEROKU:
     STATIC_ROOT = '/tmp/static'
     MEDIA_ROOT = '/tmp/media' 
 
-STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
-    # STATIC_URL = "/static/"
-    # MEDIA_URL = "/media/"
-    # STATIC_ROOT = DATA_DIR / "static"
-    # MEDIA_ROOT = DATA_DIR / "media"
+# STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
+STATIC_URL = "/static/"
+MEDIA_URL = "/media/"
+STATIC_ROOT = DATA_DIR / "static"
+MEDIA_ROOT = DATA_DIR / "media"
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
