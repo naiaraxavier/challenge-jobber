@@ -2,17 +2,14 @@ import os
 from pathlib import Path
 import dj_database_url
 from decouple import config
+import logging
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # /data/web/static
-# /data/we/media
+# /data/web/media
 DATA_DIR = BASE_DIR.parent / "data" / "web"
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("SECRET_KEY", "change-me")
@@ -20,16 +17,14 @@ SECRET_KEY = os.getenv("SECRET_KEY", "change-me")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(int(os.getenv("DEBUG", 0)))
 
-# CORS_ALLOW_CREDENTIALS = True
-
+# CORS settings
 ALLOWED_HOSTS = [
     h.strip() for h in os.getenv("ALLOWED_HOSTS", "").split(",") if h.strip()
 ]
 
 CORS_ALLOWED_ORIGINS = [
     h.strip()
-    for h in os.getenv("CORS_ALLOWED_ORIGINS", "").split(",")  # noqa
-    if h.strip()
+    for h in os.getenv("CORS_ALLOWED_ORIGINS", "").split(",") if h.strip()
 ]
 
 # Application definition
@@ -78,16 +73,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "jobber.wsgi.application"
 
-
-# Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
-# Verifique se estamos no Heroku
+# Database configuration
 ON_HEROKU = 'DYNO' in os.environ
+logger = logging.getLogger(__name__)
+logger.info(f"ON_HEROKU: {ON_HEROKU}")
 
 if ON_HEROKU:
     # Configurações específicas para o Heroku
-    # Production settings
     AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
     AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
     AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
@@ -124,14 +116,10 @@ else:
     STATIC_URL = "/static/"
     MEDIA_URL = "/media/"
     STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
-    DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
     STATIC_ROOT = DATA_DIR / "static"
     MEDIA_ROOT = DATA_DIR / "media"
 
-
 # Password validation
-# https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
@@ -148,14 +136,9 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # Internationalization
-# https://docs.djangoproject.com/en/5.1/topics/i18n/
-
 LANGUAGE_CODE = "pt-br"
-
 TIME_ZONE = "America/Sao_Paulo"
-
 USE_I18N = True
-
 USE_TZ = True
 
 REST_FRAMEWORK = {
@@ -163,7 +146,4 @@ REST_FRAMEWORK = {
 }
 
 # Default primary key field type
-# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
