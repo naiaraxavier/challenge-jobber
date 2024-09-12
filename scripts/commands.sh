@@ -5,7 +5,7 @@ set -e
 
 echo "PORT is set to: $PORT"
 
-cd djangoapp
+# cd djangoapp
 
 echo "Running collectstatic..."
 python manage.py collectstatic --noinput
