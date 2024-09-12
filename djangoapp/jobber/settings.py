@@ -164,71 +164,25 @@ REST_FRAMEWORK = {
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# # Configuração para upload de arquivos
-# FILE_UPLOAD_STORAGE = config("FILE_UPLOAD_STORAGE", default="local")
-
-# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-
-# # Configurações de arquivos estáticos e mídia local
-# STATIC_URL = "/static/"
-# STATIC_ROOT = DATA_DIR / "static"
-
-# MEDIA_URL = "/media/"
-# MEDIA_ROOT = DATA_DIR / "media"
-
-# # Configurações de produção (AWS S3)
-# if FILE_UPLOAD_STORAGE == "s3":
-#     # Armazenamento S3 para arquivos de mídia
-#     DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-
-#     # Armazenamento S3 para arquivos estáticos
-#     STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-
-#     # Nome do bucket no S3
-#     AWS_STORAGE_BUCKET_NAME = config("AWS_STORAGE_BUCKET_NAME")
-
-#     # Configurações AWS (credenciais)
-#     AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID")
-#     AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
-#     AWS_S3_REGION_NAME = config("AWS_S3_REGION_NAME", default="sa-east-1")
-
-#     # URL de acesso aos arquivos estáticos e de mídia no S3
-#     AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
-
-#     # Configurar URLs para servir arquivos estáticos e mídia
-#     STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/static/"
-#     MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/media/"
-
-
-#     # Outras configurações do S3
-#     AWS_DEFAULT_ACL = None  # Melhor para evitar problemas de permissões
-#     AWS_S3_FILE_OVERWRITE = False  # Evitar sobrescrever arquivos com o mesmo nome
-#     AWS_QUERYSTRING_AUTH = False   # Remove parâmetros de autenticação das URLs geradas
 
 # Configuração para upload de arquivos
-# FILE_UPLOAD_STORAGE = config("FILE_UPLOAD_STORAGE", default="local")
+FILE_UPLOAD_STORAGE = config("FILE_UPLOAD_STORAGE", default="local")
 
-# if ON_HEROKU or FILE_UPLOAD_STORAGE == "s3":
-#     # Configuração de armazenamento S3
-#     DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-#     STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+if FILE_UPLOAD_STORAGE == "s3":
+    # Configuração de armazenamento S3
+    DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+    STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+    AWS_STORAGE_BUCKET_NAME = config("AWS_STORAGE_BUCKET_NAME")
+    AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
+    STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/static/"
+    MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/media/"
 
-#     # Nome do bucket no S3
-#     AWS_STORAGE_BUCKET_NAME = config("AWS_STORAGE_BUCKET_NAME")
-#     AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID")
-#     AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
-#     AWS_S3_REGION_NAME = config("AWS_S3_REGION_NAME", default="sa-east-1")
 
-#     AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
-#     STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/static/"
-#     MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/media/"
-
-#     AWS_DEFAULT_ACL = None
-#     AWS_S3_FILE_OVERWRITE = False
-#     AWS_QUERYSTRING_AUTH = False
-# else: 
-#     STATIC_URL = "/static/"
-#     STATIC_ROOT = DATA_DIR / "static"
-#     MEDIA_URL = "/media/"
-#     MEDIA_ROOT = DATA_DIR / "media"
+AWS_S3_REGION_NAME = config("AWS_S3_REGION_NAME", default="sa-east-1")
+AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
+AWS_DEFAULT_ACL = None
+AWS_S3_FILE_OVERWRITE = False
+AWS_QUERYSTRING_AUTH = False
