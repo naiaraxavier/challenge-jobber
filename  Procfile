@@ -1,5 +1,5 @@
-# web: gunicorn jobber.wsgi:application --bind 0.0.0.0:$PORT
-# # release: ./djangoapp/sripts/commands.sh
-# release: ./manage.py migrate --no-input && ./manage.py collectstatic --noinput
 web: gunicorn jobber.wsgi:application --bind 0.0.0.0:$PORT
-release: cd djangoapp && ./manage.py migrate --no-input && ./manage.py collectstatic --noinput
+# # release: ./djangoapp/sripts/commands.sh
+release: ./manage.py migrate --no-input && ./manage.py collectstatic --noinput
+# web: gunicorn jobber.wsgi:application --bind 0.0.0.0:$PORT
+# release: cd djangoapp && ./manage.py migrate --no-input && ./manage.py collectstatic --noinput

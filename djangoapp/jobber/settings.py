@@ -130,8 +130,8 @@ if ON_HEROKU:
     MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
     STATIC_ROOT = '/tmp/static'
     MEDIA_ROOT = '/tmp/media' 
-else:
-    STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
+
+STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
     # STATIC_URL = "/static/"
     # MEDIA_URL = "/media/"
     # STATIC_ROOT = DATA_DIR / "static"
