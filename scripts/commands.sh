@@ -15,6 +15,7 @@ echo "Running migrate..."
 python manage.py migrate --noinput
 
 echo "Running runserver..."
-python manage.py runserver 0.0.0.0:$PORT
+# python manage.py runserver 0.0.0.0:$PORT
+gunicorn jobber.wsgi:application --bind 0.0.0.0:$PORT
 
 echo "Commands completed."
