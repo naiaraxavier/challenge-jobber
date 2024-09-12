@@ -8,13 +8,13 @@ echo "PORT is set to: $PORT"
 echo "Running collectstatic..."
 python manage.py collectstatic --noinput
 
-echo "Running makemigrations..."
-python manage.py makemigrations --noinput
+# echo "Running makemigrations..."
+# python manage.py makemigrations --noinput
 
 echo "Running migrate..."
 python manage.py migrate --noinput
 
-echo "Running runserver..."
-python manage.py runserver 0.0.0.0:$PORT
+# echo "Running runserver..."
+# python manage.py runserver 0.0.0.0:$PORT
 
 echo "Commands completed."
