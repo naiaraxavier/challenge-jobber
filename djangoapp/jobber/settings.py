@@ -183,4 +183,16 @@ REST_FRAMEWORK = {
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+FILE_UPLOAD_STORAGE = config("FILE_UPLOAD_STORAGE", default="local")
+
+
+if FILE_UPLOAD_STORAGE == "s3":
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    AWS_STORAGE_BUCKET_NAME = config("AWS_STORAGE_BUCKET_NAME", default="")
+    AWS_S3_FILE_OVERWRITE = False
+
+
+# AWS
+AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID", default="")
+AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY", default="")
+AWS_DEFAULT_ACL = None
