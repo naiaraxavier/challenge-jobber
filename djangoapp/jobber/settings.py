@@ -189,19 +189,19 @@ REST_FRAMEWORK = {
 FILE_UPLOAD_STORAGE = config("FILE_UPLOAD_STORAGE", default="local")
 
 # Configurações locais (para desenvolvimento)
-if FILE_UPLOAD_STORAGE == "local":
-    DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
-    STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 
-    # Configurações de arquivos estáticos e mídia local
-    STATIC_URL = "/static/"
-    STATIC_ROOT = DATA_DIR / "static"
+DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
+STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 
-    MEDIA_URL = "/media/"
-    MEDIA_ROOT = DATA_DIR / "media"
+# Configurações de arquivos estáticos e mídia local
+STATIC_URL = "/static/"
+STATIC_ROOT = DATA_DIR / "static"
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = DATA_DIR / "media"
 
 # Configurações de produção (AWS S3)
-elif FILE_UPLOAD_STORAGE == "s3":
+if FILE_UPLOAD_STORAGE == "s3":
     # Armazenamento S3 para arquivos de mídia
     DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 
@@ -222,6 +222,7 @@ elif FILE_UPLOAD_STORAGE == "s3":
     # Configurar URLs para servir arquivos estáticos e mídia
     STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/static/"
     MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/media/"
+
 
     # Outras configurações do S3
     AWS_DEFAULT_ACL = None  # Melhor para evitar problemas de permissões
