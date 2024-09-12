@@ -208,15 +208,6 @@ REST_FRAMEWORK = {
 # Configuração para upload de arquivos
 FILE_UPLOAD_STORAGE = config("FILE_UPLOAD_STORAGE", default="local")
 
-# Configurações locais (desenvolvimento)
-# DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
-# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-STATIC_URL = "/static/"
-STATIC_ROOT = DATA_DIR / "static"
-MEDIA_URL = "/media/"
-MEDIA_ROOT = DATA_DIR / "media"
-
-
 if FILE_UPLOAD_STORAGE == "s3":
     # Configuração de armazenamento S3
     DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
@@ -235,3 +226,8 @@ if FILE_UPLOAD_STORAGE == "s3":
     AWS_DEFAULT_ACL = None
     AWS_S3_FILE_OVERWRITE = False
     AWS_QUERYSTRING_AUTH = False
+else: 
+    STATIC_URL = "/static/"
+    STATIC_ROOT = DATA_DIR / "static"
+    MEDIA_URL = "/media/"
+    MEDIA_ROOT = DATA_DIR / "media"
