@@ -114,11 +114,11 @@ if ON_HEROKU:
     STATIC_ROOT = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
     MEDIA_ROOT = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
-
-STATIC_URL = "/static/"
-MEDIA_URL = "/media/"
-STATIC_ROOT = DATA_DIR / "static"
-MEDIA_ROOT = DATA_DIR / "media"
+else:
+    STATIC_URL = "/static/"
+    MEDIA_URL = "/media/"
+    STATIC_ROOT = DATA_DIR / "static"
+    MEDIA_ROOT = DATA_DIR / "media"
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
