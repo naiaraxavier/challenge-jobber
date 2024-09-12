@@ -49,7 +49,7 @@ ENV PATH="/scripts:/venv/bin:$PATH"
 USER root
 
 # Executa o arquivo scripts/commands.sh
-# CMD ["commands.sh"]
+CMD ["commands.sh"]
 
 # Executa o gunicorn para iniciar o servidor Django
-CMD ["gunicorn", "djangoapp.jobber.wsgi:application", "--bind", "0.0.0.0:8000"]
+# CMD ["gunicorn", "djangoapp.jobber.wsgi:application", "--bind", "0.0.0.0:8000"]
