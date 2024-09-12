@@ -2,7 +2,6 @@ import os
 from pathlib import Path
 import dj_database_url
 from decouple import config
-import logging
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -74,7 +73,7 @@ TEMPLATES = [
 WSGI_APPLICATION = "jobber.wsgi.application"
 
 ON_HEROKU = 'DYNO' in os.environ
-print("debug teste",ON_HEROKU)
+print("ambiente produção: ",ON_HEROKU)
 
 # DATABASE
 if ON_HEROKU:
