@@ -208,7 +208,7 @@ REST_FRAMEWORK = {
 # Configuração para upload de arquivos
 FILE_UPLOAD_STORAGE = config("FILE_UPLOAD_STORAGE", default="local")
 
-if FILE_UPLOAD_STORAGE == "s3":
+if ON_HEROKU or FILE_UPLOAD_STORAGE == "s3":
     # Configuração de armazenamento S3
     DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
     STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
