@@ -10,14 +10,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # /data/we/media
 DATA_DIR = BASE_DIR.parent / "data" / "web"
 
-# Check if the application is running in Heroku (production)
-ON_HEROKU = 'DYNO' in os.environ
+
+# Quick-start development settings - unsuitable for production
+# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("SECRET_KEY", "change-me")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = not ON_HEROKU
+DEBUG = bool(int(os.getenv("DEBUG", 0)))
+
+# CORS_ALLOW_CREDENTIALS = True
 
 ALLOWED_HOSTS = [
     h.strip() for h in os.getenv("ALLOWED_HOSTS", "").split(",") if h.strip()
@@ -29,7 +32,61 @@ CORS_ALLOWED_ORIGINS = [
     if h.strip()
 ]
 
+# Application definition
+INSTALLED_APPS = [
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "rest_framework",
+    "jobs",
+    "corsheaders",
+    "storages",
+]
+
+MIDDLEWARE = [
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
+]
+
+ROOT_URLCONF = "jobber.urls"
+
+TEMPLATES = [
+    {
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
+            ],
+        },
+    },
+]
+
+WSGI_APPLICATION = "jobber.wsgi.application"
+
+
+# Database
+# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
+
+# Verifique se estamos no Heroku
+ON_HEROKU = 'DYNO' in os.environ
+
 if ON_HEROKU:
+    # Configurações específicas para o Heroku
     # Production settings
     AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
     AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
@@ -51,9 +108,9 @@ if ON_HEROKU:
     DATABASES = {
         'default': dj_database_url.config(default=config('DATABASE_URL'))
     }
-
+    DEBUG = config('DEBUG', default=False, cast=bool)
 else:
-    # Local settings
+    # Configurações específicas para o ambiente local
     DATABASES = {
         'default': {
             'ENGINE': config('DB_ENGINE'),
@@ -71,7 +128,10 @@ else:
     STATIC_ROOT = DATA_DIR / "static"
     MEDIA_ROOT = DATA_DIR / "media"
 
+
 # Password validation
+# https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
@@ -87,9 +147,23 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Internationalization
+# https://docs.djangoproject.com/en/5.1/topics/i18n/
+
 LANGUAGE_CODE = "pt-br"
+
 TIME_ZONE = "America/Sao_Paulo"
+
 USE_I18N = True
+
 USE_TZ = True
 
+REST_FRAMEWORK = {
+    "DEFAULT_DATETIME_FORMAT": "d/m/Y",
+}
+
+# Default primary key field type
+# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
+
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
