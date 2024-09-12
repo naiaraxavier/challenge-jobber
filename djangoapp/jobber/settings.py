@@ -41,9 +41,6 @@ CORS_ALLOWED_ORIGINS = [
     if h.strip()
 ]
 
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -62,14 +59,13 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
-    "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "corsheaders.middleware.CorsMiddleware",
-    "django.middleware.common.CommonMiddleware",
 ]
 
 ROOT_URLCONF = "jobber.urls"
@@ -96,21 +92,6 @@ WSGI_APPLICATION = "jobber.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": os.getenv("DB_ENGINE", "change-me"),
-#         "NAME": os.getenv("POSTGRES_DB", "change-me"),
-#         "USER": os.getenv("POSTGRES_USER", "change-me"),
-#         "PASSWORD": os.getenv("POSTGRES_PASSWORD", "change-me"),
-#         "HOST": os.getenv("POSTGRES_HOST", "change-me"),
-#         "PORT": os.getenv("POSTGRES_PORT", "change-me"),
-#     }
-# }
-
-# DATABASES  = {
-#     'default': dj_database_url.config(default=config('DATABASE_URL'))
-# }
-
 # Verifique se estamos no Heroku
 ON_HEROKU = 'DYNO' in os.environ
 
@@ -134,7 +115,6 @@ else:
     }
 
 
-
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
@@ -152,7 +132,6 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
@@ -188,10 +167,18 @@ REST_FRAMEWORK = {
 # Configuração para upload de arquivos
 FILE_UPLOAD_STORAGE = config("FILE_UPLOAD_STORAGE", default="local")
 
-# Configurações locais (para desenvolvimento)
+if FILE_UPLOAD_STORAGE == "s3":
+    # Armazenamento S3 para arquivos de mídia
+    DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 
-DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
-STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
+    # Armazenamento S3 para arquivos estáticos
+    STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+
+else:
+    # Configurações locais (desenvolvimento)
+    DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
+    STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
 
 # Configurações de arquivos estáticos e mídia local
 STATIC_URL = "/static/"
@@ -202,19 +189,13 @@ MEDIA_ROOT = DATA_DIR / "media"
 
 # Configurações de produção (AWS S3)
 if FILE_UPLOAD_STORAGE == "s3":
-    # Armazenamento S3 para arquivos de mídia
-    DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-
-    # Armazenamento S3 para arquivos estáticos
-    STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-
     # Nome do bucket no S3
     AWS_STORAGE_BUCKET_NAME = config("AWS_STORAGE_BUCKET_NAME")
 
     # Configurações AWS (credenciais)
     AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID")
     AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
-    AWS_S3_REGION_NAME = config("AWS_DEFAULT_REGION", default="sa-east-1")
+    AWS_S3_REGION_NAME = config("AWS_S3_REGION_NAME", default="sa-east-1")
 
     # URL de acesso aos arquivos estáticos e de mídia no S3
     AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
