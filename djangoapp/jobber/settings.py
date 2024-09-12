@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "jobs",
     "corsheaders",
+    "storages",
 ]
 
 MIDDLEWARE = [
@@ -168,13 +169,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = "/static/"
-# /data/web/static
-STATIC_ROOT = DATA_DIR / "static"
+# STATIC_URL = "/static/"
+# # /data/web/static
+# STATIC_ROOT = DATA_DIR / "static"
 
-MEDIA_URL = "/media/"
-# /data/web/media
-MEDIA_ROOT = DATA_DIR / "media"
+# MEDIA_URL = "/media/"
+# # /data/web/media
+# MEDIA_ROOT = DATA_DIR / "media"
 
 REST_FRAMEWORK = {
     "DEFAULT_DATETIME_FORMAT": "d/m/Y",
@@ -183,16 +184,46 @@ REST_FRAMEWORK = {
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
-# FILE_UPLOAD_STORAGE = config("FILE_UPLOAD_STORAGE", default="local")
 
+# Configuração para upload de arquivos
+FILE_UPLOAD_STORAGE = config("FILE_UPLOAD_STORAGE", default="local")
 
-# if FILE_UPLOAD_STORAGE == "s3":
-#     DEFAULT_FILE_STORAGE = "core.storages.MediaStorage"
-#     AWS_STORAGE_BUCKET_NAME = config("AWS_STORAGE_BUCKET_NAME", default="")
-#     AWS_S3_FILE_OVERWRITE = False
+# Configurações locais (para desenvolvimento)
+if FILE_UPLOAD_STORAGE == "local":
+    DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
+    STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 
+    # Configurações de arquivos estáticos e mídia local
+    STATIC_URL = "/static/"
+    STATIC_ROOT = DATA_DIR / "static"
 
-# # AWS
-# AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID", default="")
-# AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY", default="")
-# AWS_DEFAULT_ACL = None
+    MEDIA_URL = "/media/"
+    MEDIA_ROOT = DATA_DIR / "media"
+
+# Configurações de produção (AWS S3)
+elif FILE_UPLOAD_STORAGE == "s3":
+    # Armazenamento S3 para arquivos de mídia
+    DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+
+    # Armazenamento S3 para arquivos estáticos
+    STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+
+    # Nome do bucket no S3
+    AWS_STORAGE_BUCKET_NAME = config("AWS_STORAGE_BUCKET_NAME")
+
+    # Configurações AWS (credenciais)
+    AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
+    AWS_S3_REGION_NAME = config("AWS_DEFAULT_REGION", default="sa-east-1")
+
+    # URL de acesso aos arquivos estáticos e de mídia no S3
+    AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
+
+    # Configurar URLs para servir arquivos estáticos e mídia
+    STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/static/"
+    MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/media/"
+
+    # Outras configurações do S3
+    AWS_DEFAULT_ACL = None  # Melhor para evitar problemas de permissões
+    AWS_S3_FILE_OVERWRITE = False  # Evitar sobrescrever arquivos com o mesmo nome
+    AWS_QUERYSTRING_AUTH = False   # Remove parâmetros de autenticação das URLs geradas
