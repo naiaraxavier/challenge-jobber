@@ -44,34 +44,26 @@ CORS_ALLOWED_ORIGINS = [
     if h.strip()
 ]
 
-# # Configurações AWS S3
-# AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
-# AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
-# AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
-# AWS_S3_REGION_NAME = config('AWS_S3_REGION_NAME', default='us-east-1')
+# Configurações AWS S3
+AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_REGION_NAME = config('AWS_S3_REGION_NAME', default='us-east-1')
 
-# AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
 
-# AWS_DEFAULT_ACL = None  # Garantir que os arquivos tenham controle de acesso correto
-# AWS_QUERYSTRING_AUTH = False  # Evita que o URL gerado contenha tokens de autenticação
-# AWS_S3_VERITY = True  # Verificar se a configuração de verificação de SSL está ativa
-# AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+AWS_QUERYSTRING_AUTH = False
+AWS_S3_FILE_OVERWRITE = False
 
-# STORAGES = {
+# Configuração de armazenamento para arquivos estáticos e mídia
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
 
-#     # Media file (image) management
-#     "default": {
-#         "BACKEND": "storages.backends.s3boto3.S3Boto3Storage"
-#     },
-
-#     # Staticfiles management
-#     "staticfiles": {
-#         "BACKEND": "storages.backends.s3boto3.S3Boto3Storage"
-#     },
-# }
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
 
 # Application definition
-
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -130,14 +122,7 @@ if ON_HEROKU:
         'default': dj_database_url.config(default=config('DATABASE_URL'))
     }
     DEBUG = config('DEBUG', default=False, cast=bool)
-
-    # Usando o AWS S3
-    # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-    # STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
-    # DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-    # MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
 else:
-    # STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
     # Configurações específicas para o ambiente local
     DATABASES = {
         'default': {
