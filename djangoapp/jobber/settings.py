@@ -108,21 +108,21 @@ AWS_DEFAULT_ACL = None
 # AWS_QUERYSTRING_AUTH = False
 AWS_S3_FILE_OVERWRITE = False
 
-STORAGES = {
+# STORAGES = {
 
-    # Media file (image) management
-    "default": {
-        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage"
-    },
+#     # Media file (image) management
+#     "default": {
+#         "BACKEND": "storages.backends.s3boto3.S3Boto3Storage"
+#     },
 
-    # Staticfiles management
-    "staticfiles": {
-        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage"
-    },
-}
+#     # Staticfiles management
+#     "staticfiles": {
+#         "BACKEND": "storages.backends.s3boto3.S3Boto3Storage"
+#     },
+# }
 
 
-# STATIC FILES
+#STATIC FILES
 if ON_HEROKU:
     STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
     STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
