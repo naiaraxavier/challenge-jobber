@@ -82,29 +82,30 @@ if ON_HEROKU:
     DATABASES = {
         'default': dj_database_url.config(default=config('DATABASE_URL'))
     }
-    DEBUG = config('DEBUG', default=False, cast=bool)
+    # DEBUG = config('DEBUG', default=False, cast=bool)
+    DEBUG = bool(int(os.getenv("DEBUG", 0)))
 else:
     # Configurações específicas para o ambiente local
     DATABASES = {
         'default': {
-            'ENGINE': config('DB_ENGINE'),
-            'NAME': config('POSTGRES_DB'),
-            'USER': config('POSTGRES_USER'),
-            'PASSWORD': config('POSTGRES_PASSWORD'),
-            'HOST': config('POSTGRES_HOST'),
-            'PORT': config('POSTGRES_PORT'),
+            "ENGINE": os.getenv("DB_ENGINE"),
+            "NAME": os.getenv("POSTGRES_DB"),
+            "USER": os.getenv("POSTGRES_USER"),
+            "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
+            "HOST": os.getenv("POSTGRES_HOST"),
+            "PORT": os.getenv("POSTGRES_PORT"),
         }
     }
 
 # AWS
-AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
-AWS_S3_REGION_NAME = config('AWS_S3_REGION_NAME', default='us-east-1')
+AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_REGION_NAME = os.getenv('AWS_S3_REGION_NAME', 'us-east-1')
 AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
 
 AWS_DEFAULT_ACL = None
-AWS_QUERYSTRING_AUTH = False
+# AWS_QUERYSTRING_AUTH = False
 AWS_S3_FILE_OVERWRITE = False
 
 
@@ -114,7 +115,7 @@ if ON_HEROKU:
     STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
     MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
-    STATIC_ROOT = BASE_DIR / "static"
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
     MEDIA_ROOT = BASE_DIR / "media"
 else:
     STATIC_URL = "/static/"
