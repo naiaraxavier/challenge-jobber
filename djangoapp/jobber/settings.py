@@ -184,13 +184,18 @@ REST_FRAMEWORK = {
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 FILE_UPLOAD_STORAGE = config("FILE_UPLOAD_STORAGE", default="local")
+STATICFILES_LOCATION = "static"
 
 
 if FILE_UPLOAD_STORAGE == "s3":
     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
     AWS_STORAGE_BUCKET_NAME = config("AWS_STORAGE_BUCKET_NAME", default="")
     AWS_S3_REGION_NAME = config("AWS_DEFAULT_REGION", default="")
+    AWS_STORAGE_BUCKET_NAME = config("AWS_STORAGE_BUCKET_NAME", default="")
+    AWS_S3_CUSTOM_DOMAIN = "%s.s3.amazonaws.com" % AWS_STORAGE_BUCKET_NAME
+    STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
     AWS_S3_FILE_OVERWRITE = False
+    AWS_S3_VERIFY = True
 
 
 # AWS
