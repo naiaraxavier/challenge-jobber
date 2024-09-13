@@ -50,4 +50,4 @@ USER root
 CMD ["commands.sh"]
 
 # Executa o gunicorn para iniciar o servidor Django
-# CMD ["gunicorn", "djangoapp.jobber.wsgi:application", "--bind", "0.0.0.0:8000"]
+# CMD ["gunicorn", "jobber.wsgi:application", "--bind", "0.0.0.0:8000"]
