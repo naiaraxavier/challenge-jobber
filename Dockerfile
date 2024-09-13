@@ -51,7 +51,7 @@ USER root
 # ENTRYPOINT ["commands.sh"]
 
 # Executa o arquivo scripts/commands.sh
-# CMD ["commands.sh"]
+CMD ["commands.sh"]
 
 # Executa o gunicorn para iniciar o servidor Django
-CMD gunicorn jobber.wsgi:application --bind 0.0.0.0:$PORT
+# CMD gunicorn jobber.wsgi:application --bind 0.0.0.0:$PORT
