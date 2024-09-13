@@ -6,22 +6,16 @@ set -e
 echo "PORT is set to: $PORT"
 
 echo "Running collectstatic..."
-# python manage.py collectstatic --noinput --verbosity=2
+python manage.py collectstatic --noinput --verbosity=2
 
-# echo "Running makemigrations..."
-# python manage.py makemigrations --noinput
+echo "Running makemigrations..."
+python manage.py makemigrations --noinput
 
-# echo "Running migrate..."
-# python manage.py migrate --noinput
+echo "Running migrate..."
+python manage.py migrate --noinput
 
 # echo "Running runserver..."
-# # python manage.py runserver 0.0.0.0:$PORT
+# python manage.py runserver 0.0.0.0:$PORT
 
+echo "Commands completed."
 
-# gunicorn --env DJANGO_SETTINGS_MODULE=jobber.settings jobber.wsgi --bind 0.0.0.0:$PORT
-# # gunicorn jobber.wsgi:application --bind 0.0.0.0:$PORT
-
-# echo "Commands completed."
-
-# echo "Starting gunicorn..."
-# exec gunicorn jobber.wsgi:application --bind 0.0.0.0:$PORT --timeout 120
