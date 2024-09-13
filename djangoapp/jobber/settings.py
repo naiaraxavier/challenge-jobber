@@ -15,6 +15,7 @@ SECRET_KEY = config('SECRET_KEY', 'change-me')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
+print("DEBUG: ", DEBUG)
 
 
 ALLOWED_HOSTS = [
@@ -116,36 +117,34 @@ print(AWS_S3_REGION_NAME)
 print(AWS_S3_CUSTOM_DOMAIN)
 
 
-STORAGES = {
-    # Media file (image) management
-    "default": {
-        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage"
-    },
-
-    # Staticfiles management
-    "staticfiles": {
-        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage"
-    },
-}
-
-
 #STATIC FILES
-# if ON_HEROKU:
-# Static files (CSS, JavaScript, images)
-STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-STATIC_ROOT = DATA_DIR / "static"
+if ON_HEROKU:
+    STORAGES = {
+        # Media file (image) management
+        "default": {
+            "BACKEND": "storages.backends.s3boto3.S3Boto3Storage"
+        },
 
-# Media files (uploads)
-MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-MEDIA_ROOT = DATA_DIR / "media"
+        # Staticfiles management
+        "staticfiles": {
+            "BACKEND": "storages.backends.s3boto3.S3Boto3Storage"
+        },
+    }
+    # Static files (CSS, JavaScript, images)
+    STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
+    STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    STATIC_ROOT = DATA_DIR / "static"
 
-# else:
-#     STATIC_URL = "/static/"
-#     MEDIA_URL = "/media/"
-#     STATIC_ROOT = DATA_DIR / "static"
-#     MEDIA_ROOT = DATA_DIR / "media"
+    # Media files (uploads)
+    MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    MEDIA_ROOT = DATA_DIR / "media"
+
+else:
+    STATIC_URL = "/static/"
+    MEDIA_URL = "/media/"
+    STATIC_ROOT = DATA_DIR / "static"
+    MEDIA_ROOT = DATA_DIR / "media"
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
