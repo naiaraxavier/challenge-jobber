@@ -52,4 +52,4 @@ USER root
 # CMD ["commands.sh"]
 
 # Executa o gunicorn para iniciar o servidor Django
-CMD gunicorn hello_django.wsgi:application --bind 0.0.0.0:$PORT
+CMD gunicorn jobber.wsgi:application --bind 0.0.0.0:$PORT
