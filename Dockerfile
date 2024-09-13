@@ -48,8 +48,7 @@ ENV PATH="/scripts:/venv/bin:$PATH"
 # Muda o usuário para duser
 USER root
 
-# collect static files
-RUN python manage.py collectstatic --noinput
+ENTRYPOINT ["commands.sh"]
 
 # Executa o arquivo scripts/commands.sh
 # CMD ["commands.sh"]
