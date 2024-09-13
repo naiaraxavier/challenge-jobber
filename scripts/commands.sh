@@ -7,8 +7,8 @@ echo "PORT is set to: $PORT"
 
 # cd djangoapp
 
-echo "Running collectstatic..."
-python manage.py collectstatic --noinput
+# echo "Running collectstatic..."
+# python manage.py collectstatic --noinput
 
 # echo "Running makemigrations..."
 # python manage.py makemigrations --noinput
@@ -18,6 +18,6 @@ python manage.py collectstatic --noinput
 
 echo "Running runserver..."
 # python manage.py runserver 0.0.0.0:$PORT
-gunicorn jobber.wsgi:application --bind 0.0.0.0:$PORT
+gunicorn jobber.wsgi:application --bind 0.0.0.0:$PORT --timeout 120
 
 echo "Commands completed."
