@@ -5,11 +5,8 @@ set -e
 
 echo "PORT is set to: $PORT"
 
-RUN echo "Running collectstatic..." && python manage.py collectstatic --noinput
-
-
-# echo "Running collectstatic..."
-# python manage.py collectstatic --noinput
+echo "Running collectstatic..."
+# python manage.py collectstatic --noinput --verbosity=2
 
 # echo "Running makemigrations..."
 # python manage.py makemigrations --noinput
