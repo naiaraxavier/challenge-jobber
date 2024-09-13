@@ -18,6 +18,6 @@ echo "PORT is set to: $PORT"
 
 echo "Running runserver..."
 # python manage.py runserver 0.0.0.0:$PORT
-gunicorn jobber.wsgi:application --bind 0.0.0.0:$PORT --timeout 120
+gunicorn jobber.wsgi:application --bind 0.0.0.0:$PORT
 
 echo "Commands completed."
