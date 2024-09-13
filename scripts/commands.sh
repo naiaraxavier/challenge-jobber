@@ -16,10 +16,12 @@ python manage.py collectstatic --noinput
 
 # echo "Running runserver..."
 # # python manage.py runserver 0.0.0.0:$PORT
+
+
 # gunicorn --env DJANGO_SETTINGS_MODULE=jobber.settings jobber.wsgi --bind 0.0.0.0:$PORT
 # # gunicorn jobber.wsgi:application --bind 0.0.0.0:$PORT
 
 # echo "Commands completed."
 
-echo "Starting gunicorn..."
-exec gunicorn jobber.wsgi:application --bind 0.0.0.0:$PORT --timeout 120
+# echo "Starting gunicorn..."
+# exec gunicorn jobber.wsgi:application --bind 0.0.0.0:$PORT --timeout 120
